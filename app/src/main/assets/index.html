@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Plenka3</title><meta name="theme-color" content="#1B1F24"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Плёнка"><style id="st">
+:root{--bg:#F4F5F7;--card:#fff;--ink:#1B1F24;--mut:#5B6470;--line:#D5DAE0;--seg:#E3E6EA;--tb:#FFF0E3;--ti:#6B3A12;--fb:#E4ECFF;--fi:#2A4A9A;--sel:#E4ECFF;--head:#EDEFF2;--on:#1B1F24;--onink:#fff;--wb:#FFF0A0;--wi:#5C4A00;--sb:#E3F4E6;--si:#1E5B2B;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171B;--card:#1D2127;--ink:#ECEFF3;--mut:#9AA4B0;--line:#323941;--seg:#2A3038;--tb:#3A2A1C;--ti:#FFC99A;--fb:#1F2E4D;--fi:#A9C2FF;--sel:#243350;--head:#252A31;--on:#ECEFF3;--onink:#14171B;--wb:#4A3F0C;--wi:#FFE680;--sb:#1F3A27;--si:#A7E3B4;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14171B;--card:#1D2127;--ink:#ECEFF3;--mut:#9AA4B0;--line:#323941;--seg:#2A3038;--tb:#3A2A1C;--ti:#FFC99A;--fb:#1F2E4D;--fi:#A9C2FF;--sel:#243350;--head:#252A31;--on:#ECEFF3;--onink:#14171B;--wb:#4A3F0C;--wi:#FFE680;--sb:#1F3A27;--si:#A7E3B4;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+.in{max-width:1360px;margin:0 auto;box-sizing:border-box}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg)}
+.top .in{padding:12px 16px 4px;display:flex;flex-direction:column;gap:10px}
+.hd,.ctl{display:flex;flex-direction:column;gap:10px}
+h1{margin:0;font-size:22px;line-height:1.3}
+.mut{color:var(--mut)}
+.seg{display:flex;gap:2px;background:var(--seg);border-radius:12px;padding:3px}
+.seg button{flex:1;min-height:44px;border:0;border-radius:10px;background:transparent;color:var(--mut);font-weight:600;white-space:nowrap}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 0 0 1px var(--ink)}
+.s{height:48px;box-sizing:border-box;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 14px;font-size:16px;width:100%}
+.chips{display:flex;gap:8px}
+.chip{flex:1 1 auto;min-width:0;padding:0 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);font-weight:600}
+.chip[aria-pressed=true]{background:var(--on);color:var(--onink);border-color:var(--on)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:44px;font-size:14px;font-weight:600;color:var(--mut)}
+.bar span.c{display:flex;align-items:center;gap:8px;width:100%}.bar .c button{flex:1}
+.bar select,.bar button{min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:0 10px;font-size:14px;font-weight:600}
+.bar button[aria-pressed=true]{background:var(--on);color:var(--onink);border-color:var(--on)}
+.main{display:flex;gap:16px;padding:4px 16px 24px;align-items:flex-start}
+.list{flex:1;min-width:0}
+.cards{display:flex;flex-direction:column;gap:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer}
+.card[aria-current=true]{border-color:var(--ink)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.nm{background:none;border:0;padding:0;font-size:17px;font-weight:600;text-align:left}
+.star{width:44px;height:44px;margin:-10px -10px -10px 0;background:none;border:0;display:flex;align-items:center;justify-content:center;color:var(--mut)}
+.star[aria-pressed=true]{color:var(--ink)}
+.pl{display:flex;gap:8px}
+.plate{flex:1;border-radius:10px;padding:6px 8px}.t{background:var(--tb);color:var(--ti)}.f{background:var(--fb);color:var(--fi)}
+.plate small{display:block;font-size:12px}
+.tri{display:flex;justify-content:space-between;margin-top:2px}.tri div{text-align:center}.tri i{display:block;font-style:normal;font-size:11px}.tri b{font-size:20px;color:var(--ink)}
+.tbl{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+table{width:100%;min-width:1120px;border-collapse:collapse}
+th{text-align:left;padding:0 10px;height:40px;background:var(--head);white-space:nowrap;font-size:13px}
+th button{background:none;border:0;padding:0;font-weight:600;font-size:13px}
+tr.sub th{height:26px;font-size:12px;color:var(--mut);font-weight:500}
+td{padding:0 10px;height:48px;border-top:1px solid var(--line);font-size:14px}
+td.v{font-weight:700;font-size:16px}
+tbody tr{cursor:pointer}tbody tr:hover{background:var(--head)}tbody tr.sel{background:var(--sel)}
+.tbl .star{margin:0}.tbl .nm{font-size:14px}
+.empty{text-align:center;padding:40px 24px}.empty b{display:block;font-size:16px;margin-bottom:4px}
+.panel{position:fixed;left:0;right:0;bottom:0;max-height:85vh;overflow:auto;box-sizing:border-box;background:var(--card);border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.25);padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));transform:translateY(110%);visibility:hidden;transition:transform .2s,visibility .2s;z-index:20}
+.panel.open{transform:none;visibility:visible}
+.panel h2{margin:0;font-size:20px}.panel h3{margin:14px 0 6px;font-size:13px;color:var(--mut);font-weight:600}
+.x{min-height:44px;background:none;border:0;font-weight:600;color:var(--mut)}
+.g2,.g3{display:grid;gap:8px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.fl{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--mut)}
+.fl input{height:44px;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:0 10px;font-size:16px;width:100%;min-width:0}
+.pri,.sec{width:100%;height:44px;border-radius:10px;font-weight:600;margin-top:8px;border:1px solid var(--on)}
+.pri{background:var(--on);color:var(--onink)}.sec{background:var(--card)}
+.wt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-radius:10px;padding:6px 10px;margin:2px 0 8px;font-size:13px}.wt b{font-size:18px;color:var(--ink)}.wt b.big{font-size:24px}.w{background:var(--wb);color:var(--wi)}th.w,td.w{background:var(--wb)}th.w button{color:var(--wi)}.wbox{background:var(--wb);border-radius:10px;padding:8px}.ro{height:44px;box-sizing:border-box;display:flex;align-items:center;padding:0 10px;font-size:16px;font-weight:700;color:var(--ink);border:1px dashed var(--wi);border-radius:10px}.cg .tri b{font-size:15px}tr.sub th.w{color:var(--wi)}.wbox .fl{color:var(--wi)}.cmp{display:none;flex:1;min-width:0;max-width:760px}body.cm .cmp{display:block}body.cm .list,body.cm .panel,body.cm .ctl,body.cm .bar{display:none}.cmp h2{margin:0;font-size:20px}.cmp h3{margin:14px 0 6px;font-size:13px;color:var(--mut);font-weight:600}.back{min-height:44px;background:none;border:0;font-weight:600;color:var(--mut)}.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.cg .card{cursor:default}.cg .pl{flex-direction:column}.sel2{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--mut)}.sel2 select{height:48px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0 10px;font-size:16px;width:100%}.res{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.res .seg{margin-top:4px}
+.ln{background:var(--sb);color:var(--si)}.g4{display:grid;gap:8px;grid-template-columns:repeat(4,1fr)}th.ln,td.ln{background:var(--sb)}th.ln button{color:var(--si)}tr.sub th.ln{color:var(--si)}td.ln{font-size:13px;font-weight:500}.tri.sm{gap:2px}.tri.sm div{flex:1;min-width:0}.tri.sm i{display:flex;align-items:flex-end;justify-content:center;min-height:22px;font-size:10px;line-height:1.1}.tri.sm b{font-size:15px;font-weight:500}
+.adm{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--seg);border-radius:10px;padding:4px 4px 4px 12px;font-size:13px;font-weight:600}.adm[hidden]{display:none}.adm button{min-height:44px;border:1px solid var(--on);border-radius:8px;background:var(--on);color:var(--onink);padding:0 14px;font-weight:700;white-space:nowrap}.adm button:disabled{opacity:.4}.g3:not(.wbox) .ro{border-color:var(--line)}
+#ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+#ts.on{opacity:1}
+@media (min-width:900px){
+.bar span.c{width:auto}.bar .c button{flex:0 0 auto;padding:0 16px}
+.cards{display:none}.tbl{display:block}.top{position:static}
+.hd{flex-direction:row;align-items:center;gap:20px}.seg{width:auto}.seg button{padding:0 18px}
+.ctl{flex-direction:row;align-items:center}.s{max-width:420px;flex:1}.chips{width:340px}.sortm{display:none}
+.panel{position:sticky;top:12px;transform:none;visibility:visible;flex:0 0 300px;width:300px;max-height:none;border:1px solid var(--line);border-radius:12px;box-shadow:none}
+.x{display:none}}
+</style></head><body>
+<header class="top"><div class="in">
+<div class="adm" id="adm" hidden><span id="adt"></span><button id="sv" data-save disabled>Экспортировать данные</button></div><div class="hd"><h1>Подбор плёнки</h1><div class="seg" role="group" aria-label="Станок" id="seg"></div></div>
+<div class="ctl"><input id="q" class="s" type="search" placeholder="Название плёнки, например Д-30" aria-label="Поиск по названию плёнки" autocomplete="off"><div class="chips" id="chips" role="group" aria-label="Группа"></div></div>
+<div class="bar"><span class="c"><button data-cmp="" id="cb">⇄ Сравнение</button><button data-favonly id="fo" aria-pressed="false">★ Избранное</button></span></div>
+</div></header>
+<main class="in main"><div class="list"><div class="cards" id="cards"></div><div class="tbl" id="tbl"></div><div id="empty"></div></div><section class="cmp" id="cmp" aria-label="Сравнение"></section><aside class="panel" id="panel" aria-label="Параметры плёнки"></aside></main>
+<div id="ts" role="status"></div>
+
+<script src="data.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const G=['Д','Т','БП','Перфорация'],grp=()=>G.filter(g=>!(g=='БП'&&S.m=='1200')),M={'1500':'Станок 1500 мм','1200':'Станок 1200 мм'},CAP=['90','80','60'];
+const rng=(a,b,s)=>{const r=[];for(let x=a;x<=b;x+=s)r.push(x);return r};
+const FILMS={'Д':rng(30,90,5).map(n=>'Д-'+n),'Т':[43,47,...rng(50,90,5),113].map(n=>'Т-'+n),'БП':['Т-100','Д-100'],'Перфорация':[]};
+const S={m:'1500',g:'Д',q:'',fav:false,k:'name',d:1,sel:null,favs:[],vals:{},lv:{},edit:false,dirty:0,cmp:false,a:null,b:null,sg:'add',cf:{}};
+try{const o=JSON.parse(localStorage.getItem('plenka')||'{}');if(M[o.m])S.m=o.m;if(Array.isArray(o.favs))S.favs=o.favs;if(o.vals&&typeof o.vals=='object')S.lv=o.vals}catch(e){}
+try{S.vals=JSON.parse(JSON.stringify((window.PLENKA_DATA&&window.PLENKA_DATA.vals)||{}))}catch(e){}
+try{const saved=JSON.parse(localStorage.getItem('plenka3-values')||'{}');if(saved&&typeof saved==='object')S.vals={...S.vals,...saved}}catch(e){}
+function save(){try{localStorage.setItem('plenka',JSON.stringify({m:S.m,favs:S.favs}));localStorage.setItem('plenka3-values',JSON.stringify(S.vals))}catch(e){}}
+const get=id=>S.vals[S.m+'|'+id]||{};
+const setv=(id,k,x)=>{const key=S.m+'|'+id;(S.vals[key]=S.vals[key]||{})[k]=x;S.dirty=1;save();adm()};
+const val=x=>x===undefined||x===''?'—':x;
+const WC=['макс','−5%','−7%'],dens=id=>parseInt(id.split('|')[1].split('-')[1],10),len=id=>id.startsWith('БП|')?50:100,maxw=id=>dens(id)*(+S.m)*len(id)/1000,wv=(id,p)=>Math.ceil(Math.round(maxw(id)*(100-p)/100*1e6)/1e6/2)*2,kg=x=>(x/1000).toFixed(2),wvals=id=>[0,5,7].map(p=>kg(wv(id,p))),wtri=id=>wvals(id).map((v,i)=>`<div><i>${WC[i]}</i><b>${v}</b></div>`).join('');
+const LS=g=>`<div class="plate ln" style="margin-top:8px"><div class="tri sm">${[['l2','Метраж'],['l1','Основная скорость'],['v1','Вал 1'],['v2','Вал 2'],['v3','Вал 3'],['v4','Вал 4']].map(([k,c])=>`<div><i>${c}</i><b>${val(g[k])}</b></div>`).join('')}</div></div>`;
+const nrm=s=>s.toLowerCase().replace(/[\s-]/g,''),num=n=>parseInt(n.split('-')[1],10);
+function items(){
+ let a=[];(S.q?grp():[S.g]).forEach(g=>FILMS[g].forEach(n=>a.push({id:g+'|'+n,n,gi:G.indexOf(g)})));
+ if(S.q)a=a.filter(x=>nrm(x.n).includes(nrm(S.q)));
+ if(S.fav)a=a.filter(x=>S.favs.includes(x.id));
+ a.sort((x,y)=>{
+  if(S.k=='name')return S.d*((x.gi-y.gi)||(num(x.n)-num(y.n)));
+  const g=id=>S.k=='w2'?maxw(id):parseFloat(get(id)[S.k]),p=g(x.id),q=g(y.id);
+  if(isNaN(p)&&isNaN(q))return 0;if(isNaN(p))return 1;if(isNaN(q))return -1;return S.d*(p-q)});
+ return a}
+const star=on=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="${on?'currentColor':'none'}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>`;
+const tri=(g,p)=>CAP.map((c,i)=>`<div><i>${c}</i><b>${val(g[p+(i+1)])}</b></div>`).join('');
+const sbtn=(id,on)=>`<button class="star" data-fav="${id}" aria-pressed="${on}" aria-label="В избранное">${star(on)}</button>`;
+function card(x){const g=get(x.id),on=S.favs.includes(x.id);
+ return `<article class="card" data-id="${x.id}"${x.id==S.sel?' aria-current="true"':''}><div class="row"><button class="nm" data-open="${x.id}">${x.n}</button>${sbtn(x.id,on)}</div><div class="plate w" style="margin:2px 0 8px"><small>Вес рулона, кг</small><div class="tri">${wtri(x.id)}</div></div><div class="pl"><div class="plate t"><small>Температура, °C</small><div class="tri">${tri(g,'t')}</div></div><div class="plate f"><small>Подача, Гц</small><div class="tri">${tri(g,'f')}</div></div></div>${LS(g)}</article>`}
+function row(x){const g=get(x.id),on=S.favs.includes(x.id);
+ return `<tr data-id="${x.id}"${x.id==S.sel?' class="sel"':''}><td><button class="nm" data-open="${x.id}">${x.n}</button></td>${wvals(x.id).map(v=>`<td class="w v">${v}</td>`).join('')}${['t1','t2','t3'].map(k=>`<td class="v">${val(g[k])}</td>`).join('')}${['l2','l1','v1','v2','v3','v4'].map(k=>`<td class="ln">${val(g[k])}</td>`).join('')}${['f1','f2','f3'].map(k=>`<td class="v">${val(g[k])}</td>`).join('')}<td>${sbtn(x.id,on)}</td></tr>`}
+const th=(k,t)=>`<button data-sort="${k}">${t}${S.k==k?(S.d>0?' ↑':' ↓'):''}</button>`;
+function lists(){
+ const a=items();
+ $('#chips').innerHTML=grp().map(g=>`<button class="chip" data-g="${g}" aria-pressed="${!S.q&&S.g==g}">${g}</button>`).join('');
+  $('#fo').setAttribute('aria-pressed',S.fav);
+ $('#cards').innerHTML=a.map(card).join('');
+ $('#tbl').innerHTML=a.length?`<table><thead><tr><th rowspan="2">${th('name','Название')}</th><th class="w" colspan="3">${th('w2','Вес рулона, кг')}</th><th colspan="3">${th('t1','Температура, °C')}</th><th class="ln" colspan="6">${th('l2','Метраж и скорости')}</th><th colspan="3">${th('f1','Подача, Гц')}</th><th rowspan="2"></th></tr><tr class="sub">${WC.map(c=>`<th class="w">${c}</th>`).join('')}${CAP.map(c=>`<th>${c}</th>`).join('')}${['Метраж','Основная скорость','Вал 1','Вал 2','Вал 3','Вал 4'].map(c=>`<th class="ln">${c}</th>`).join('')}${CAP.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${a.map(row).join('')}</tbody></table>`:'';
+ $('#empty').innerHTML=a.length?'':S.fav?'<div class="empty mut"><b>В избранном пусто</b>Отметьте плёнку звёздочкой</div>':S.q?'<div class="empty mut"><b>Ничего не найдено</b>Проверьте название</div>':'<div class="empty mut"><b>Данных пока нет</b>Параметры для группы '+S.g+' будут добавлены позже</div>';
+}
+function panel(){
+ const p=$('#panel');p.classList.toggle('open',!!S.sel);
+ if(!S.sel){p.innerHTML='<p class="mut" style="margin:0">Выберите плёнку в списке, чтобы увидеть и изменить параметры.</p>';return}
+ const id=S.sel,[g,n]=id.split('|'),v=get(id),on=S.favs.includes(id);
+ const inp=(k,l)=>S.edit?`<label class="fl"><span>${l}</span><input data-f="${k}" type="number" inputmode="decimal" step="any" value="${v[k]??''}"></label>`:`<div class="fl"><span>${l}</span><div class="ro">${val(v[k])}</div></div>`;
+ p.innerHTML=`<div class="row"><h2>${n}</h2><button class="x" data-close>Закрыть</button></div><div class="mut">${M[S.m]} · группа ${g}</div><h3>Вес рулона, кг</h3><div class="g3 wbox">${[0,5,7].map((p,i)=>`<div class="fl"><span>${WC[i]}</span><div class="ro">${kg(wv(id,p))}</div></div>`).join('')}</div><p class="mut" style="margin:6px 0 0;font-size:12px">Считается автоматически: плотность × ширина ${String(S.m/1000).replace('.',',')} м × ${len(id)} м. −5% и −7% округляются вверх до чётного числа граммов, затем переводятся в кг.</p><h3>Температура, °C</h3><div class="g3">${CAP.map((c,i)=>inp('t'+(i+1),c)).join('')}</div><h3>Метраж и скорости</h3><div class="g2">${inp('l2','Метраж')}${inp('l1','Основная скорость')}</div><h3 style="margin-top:8px">Скорость валов</h3><div class="g4">${[1,2,3,4].map(i=>inp('v'+i,'Вал '+i)).join('')}</div><h3>Подача, Гц</h3><div class="g3">${CAP.map((c,i)=>inp('f'+(i+1),c)).join('')}</div><button class="pri" data-copy>Копировать настройки</button><button class="sec" data-cmp="${id}">⇄ Сравнить с другой плёнкой</button><button class="sec" data-fav="${id}">${on?'Убрать из избранного':'В избранное'}</button><p class="mut" style="font-size:13px">${S.edit?'Значения хранятся в странице отдельно для каждого станка и станут видны всем после нажатия «Скачать данные» и замены файла data.js на сайте.':'Значения задаёт администратор.'}</p>`}
+const fmt=x=>x.toLocaleString('ru-RU',{maximumFractionDigits:1}),nm=id=>id.split('|')[1];
+const opts=v=>grp().map(g=>FILMS[g].length?`<optgroup label='${g}'>${FILMS[g].map(n=>`<option value='${g}|${n}'${g+'|'+n==v?' selected':''}>${n}</option>`).join('')}</optgroup>`:'').join('');
+const baseF=i=>S.cf['f'+i]!==undefined?S.cf['f'+i]:(get(S.a)['f'+i]??'');
+function calc(){const wa=maxw(S.a),wb=maxw(S.b);if(isNaN(wa)||isNaN(wb)||wa<=0)return null;const p=Math.abs(wb-wa)/wa*100;return{wa,wb,p,k:S.sg=='add'?1+p/100:1-p/100}}
+const outv=i=>{const c=calc(),b=parseFloat(baseF(i));return c&&!isNaN(b)?fmt(b*c.k):'—'};
+const out=()=>CAP.map((c,i)=>`<div><i>${c}</i><b>${outv(i+1)}</b></div>`).join('');
+function mini(id){const g=get(id);return `<div class='card'><b>${nm(id)}</b><div class='plate w' style='margin:2px 0 8px'><small>Вес рулона, кг</small><div class='tri'>${wtri(id)}</div></div><div class='pl'><div class='plate t'><small>Температура, °C</small><div class='tri'>${tri(g,'t')}</div></div><div class='plate f'><small>Подача, Гц</small><div class='tri'>${tri(g,'f')}</div></div></div></div>`}
+function cmpv(){
+ const c=$('#cmp');if(!S.cmp){c.innerHTML='';return}
+ if(!S.a)S.a='Д|Д-30';
+ if(!S.b){const [g,n]=S.a.split('|'),l=FILMS[g];S.b=g+'|'+(l[l.indexOf(n)+1]||l[0])}
+ const cl=calc(),sg=(v,t)=>`<button data-sg='${v}' aria-pressed='${S.sg==v}'>${t}</button>`;
+ c.innerHTML=`<div class='row'><h2>Сравнение</h2><button class='back' data-cmpx>← К списку</button></div><div class='mut' style='margin:2px 0 0'>${M[S.m]}</div><div class='cg'><label class='sel2'>Плёнка A (сейчас)<select data-sa>${opts(S.a)}</select></label><label class='sel2'>Плёнка B (новая)<select data-sb>${opts(S.b)}</select></label></div><div class='cg'>${mini(S.a)}${mini(S.b)}</div><div class='res'><div class='wt w'><span>Разница макс. веса от ${nm(S.a)}</span><b class='big'>${cl?fmt(cl.p)+' %':'—'}</b></div><p class='mut' style='margin:0 0 10px;font-size:13px'>${cl?`${nm(S.b)} ${cl.wb>cl.wa?'тяжелее':cl.wb<cl.wa?'легче':'весит столько же, что'} ${nm(S.a)}: ${kg(cl.wa)} → ${kg(cl.wb)} кг`:'Введите максимальный вес рулона для обеих плёнок в их панелях.'}</p><div class='seg' role='group' aria-label='Действие с подачей'>${sg('add','Прибавить')}${sg('sub','Убавить')}</div><h3>Подача ${nm(S.a)}, Гц (можно поправить)</h3><div class='g3'>${[1,2,3].map(i=>`<label class='fl'><span>${CAP[i-1]}</span><input data-cf='f${i}' type='number' inputmode='decimal' step='any' value='${baseF(i)}'></label>`).join('')}</div><button class='sec' data-cfr>Сбросить к справочнику</button><h3>Подача ${nm(S.b)} после расчёта, Гц</h3><div class='plate f'><div class='tri' id='out'>${out()}</div></div><button class='pri' data-ccopy>Копировать подачу</button></div>`}
+function render(){
+ $('#seg').innerHTML=Object.keys(M).map(m=>`<button data-m="${m}" aria-pressed="${S.m==m}">${M[m]}</button>`).join('');
+ lists();panel();document.body.classList.toggle('cm',S.cmp);cmpv()}
+function toast(t){const e=$('#ts');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),1600)}
+function copy(x){
+ const [,n]=(S.sel||'|').split('|'),v=get(S.sel),f=p=>[1,2,3].map(i=>v[p+i]||'—').join(' / ');
+ const t=x||`${n} · ${M[S.m]}\nВес рулона, кг (макс / −5% / −7%): ${wvals(S.sel).join(' / ')}\nТемпература, °C (90/80/60): ${f('t')}\nПодача, Гц (90/80/60): ${f('f')}\nМетраж: ${v.l2||'—'}; основная скорость: ${v.l1||'—'}\nСкорость валов 1–4: ${['v1','v2','v3','v4'].map(k=>v[k]||'—').join(' / ')}`;
+ const fb=()=>{try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();toast(ok?'Скопировано':'Не удалось скопировать')}catch(e){toast('Не удалось скопировать')}};
+ try{navigator.clipboard.writeText(t).then(()=>toast('Скопировано'),fb)}catch(e){fb()}}
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-m],[data-g],[data-fav],[data-sort],[data-open],[data-close],[data-copy],[data-favonly],[data-dir],[data-id],[data-cmp],[data-cmpx],[data-sg],[data-cfr],[data-ccopy],[data-save]');
+ if(!t)return;const d=t.dataset;
+ if(d.m){S.m=d.m;S.cf={};if(!grp().includes(S.g))S.g='Д';if(S.m=='1200'){for(const k of ['a','b','sel'])if(S[k]&&S[k].startsWith('БП|'))S[k]=null}save();render()}
+ else if(d.g){S.g=d.g;S.q='';$('#q').value='';S.sel=null;render()}
+ else if(d.fav){const i=S.favs.indexOf(d.fav);i<0?S.favs.push(d.fav):S.favs.splice(i,1);save();render()}
+ else if(d.sort){S.d=S.k==d.sort?-S.d:1;S.k=d.sort;render()}
+ else if(d.dir!==undefined){S.d=-S.d;render()}
+ else if(d.favonly!==undefined){S.fav=!S.fav;render()}
+ else if(d.close!==undefined){S.sel=null;render()}
+ else if(d.copy!==undefined){copy()}
+ else if(d.save!==undefined){savePub()}
+ else if(d.cmp!==undefined){S.cmp=true;S.a=d.cmp||S.a||S.sel;S.b=null;S.cf={};S.sel=null;render()}
+ else if(d.cmpx!==undefined){S.cmp=false;render()}
+ else if(d.sg){S.sg=d.sg;render()}
+ else if(d.cfr!==undefined){S.cf={};render()}
+ else if(d.ccopy!==undefined){const c=calc();copy(`${nm(S.b)} · ${M[S.m]}\nПодача, Гц (90/80/60): ${[1,2,3].map(outv).join(' / ')}`+(c?`\nРазница макс. веса ${nm(S.a)} → ${nm(S.b)}: ${fmt(c.p)} % (${S.sg=='add'?'прибавлено':'убавлено'})`:''))}
+ else{S.sel=d.open||d.id;render()}});
+document.addEventListener('input',e=>{const t=e.target;
+ if(t.id=='q'){S.q=t.value.trim();lists()}
+ else if(t.dataset.f){setv(S.sel,t.dataset.f,t.value);lists()}
+ else if(t.dataset.cf){S.cf[t.dataset.cf]=t.value;$('#out').innerHTML=out()}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.sa!==undefined){S.a=t.value;S.cf={};render()}else if(t.dataset.sb!==undefined){S.b=t.value;render()}});
+document.addEventListener('keydown',e=>{
+ if(e.key=='Escape'&&S.sel){S.sel=null;render()}
+ else if(e.key=='/'&&!/INPUT|SELECT/.test(e.target.tagName)){e.preventDefault();$('#q').focus()}});
+function adm(){const a=$('#adm');a.hidden=!S.edit;if(!S.edit)return;$('#adt').textContent=S.dirty?'Есть несохранённые изменения':'Режим администратора';$('#sv').disabled=!S.dirty}
+function savePub(){
+ if(!S.dirty)return;
+ const payload=JSON.stringify({v:1,vals:S.vals},null,1);
+ if(window.PlenkaAndroid&&typeof window.PlenkaAndroid.saveBackup==='function'){
+  window.PlenkaAndroid.saveBackup(payload);
+  S.dirty=0;adm();toast('Изменения сохранены. Выберите место для резервной копии');return;
+ }
+ const u=URL.createObjectURL(new Blob(['window.PLENKA_DATA='+payload+';\n'],{type:'text/javascript;charset=utf-8'})),l=document.createElement('a');
+ l.href=u;l.download='data.js';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),3000);
+ S.dirty=0;adm();toast('Резервная копия data.js скачана; изменения сохранены на этом устройстве')}
+render();
+function admInit(){
+ const on=location.hash=='#admin' || location.hash=='#edit';
+ if(on&&!S.edit){S.edit=true;let d=null;try{d=JSON.parse(sessionStorage.getItem('plenka-d'))}catch(e){}
+  if(d&&typeof d=='object'){S.vals=d;S.dirty=1}}
+ else if(!on&&S.edit)S.edit=false;
+ render();adm()}
+window.addEventListener('hashchange',admInit);admInit();
+if('serviceWorker' in navigator&&location.protocol.indexOf('http')==0)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body></html>

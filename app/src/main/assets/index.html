@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Plenka3</title><meta name="theme-color" content="#1B1F24"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Плёнка"><style id="st">
-:root{--bg:#F4F5F7;--card:#fff;--ink:#1B1F24;--mut:#5B6470;--line:#D5DAE0;--seg:#E3E6EA;--tb:#FFF0E3;--ti:#6B3A12;--fb:#E4ECFF;--fi:#2A4A9A;--sel:#E4ECFF;--head:#EDEFF2;--on:#1B1F24;--onink:#fff;--wb:#FFF0A0;--wi:#5C4A00;--sb:#E3F4E6;--si:#1E5B2B;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Plenka3</title><meta name="theme-color" content="#14171B"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Плёнка"><style id="st">
+:root{--bg:#14171B;--card:#1D2127;--ink:#ECEFF3;--mut:#9AA4B0;--line:#323941;--seg:#2A3038;--tb:#3A2A1C;--ti:#FFC99A;--fb:#1F2E4D;--fi:#A9C2FF;--sel:#243350;--head:#252A31;--on:#ECEFF3;--onink:#14171B;--wb:#4A3F0C;--wi:#FFE680;--sb:#1F3A27;--si:#A7E3B4;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171B;--card:#1D2127;--ink:#ECEFF3;--mut:#9AA4B0;--line:#323941;--seg:#2A3038;--tb:#3A2A1C;--ti:#FFC99A;--fb:#1F2E4D;--fi:#A9C2FF;--sel:#243350;--head:#252A31;--on:#ECEFF3;--onink:#14171B;--wb:#4A3F0C;--wi:#FFE680;--sb:#1F3A27;--si:#A7E3B4;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#14171B;--card:#1D2127;--ink:#ECEFF3;--mut:#9AA4B0;--line:#323941;--seg:#2A3038;--tb:#3A2A1C;--ti:#FFC99A;--fb:#1F2E4D;--fi:#A9C2FF;--sel:#243350;--head:#252A31;--on:#ECEFF3;--onink:#14171B;--wb:#4A3F0C;--wi:#FFE680;--sb:#1F3A27;--si:#A7E3B4;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -70,7 +70,7 @@ tbody tr{cursor:pointer}tbody tr:hover{background:var(--head)}tbody tr.sel{backg
 .x{display:none}}
 </style></head><body>
 <header class="top"><div class="in">
-<div class="adm" id="adm" hidden><span id="adt"></span><button id="sv" data-save disabled>Экспортировать данные</button></div><div class="hd"><h1>Подбор плёнки</h1><div class="seg" role="group" aria-label="Станок" id="seg"></div></div>
+<div class="adm" id="adm" hidden><span id="adt"></span><button id="sv" data-save disabled>Сохранить</button></div><div class="hd"><h1>Подбор плёнки</h1><div class="seg" role="group" aria-label="Станок" id="seg"></div></div>
 <div class="ctl"><input id="q" class="s" type="search" placeholder="Название плёнки, например Д-30" aria-label="Поиск по названию плёнки" autocomplete="off"><div class="chips" id="chips" role="group" aria-label="Группа"></div></div>
 <div class="bar"><span class="c"><button data-cmp="" id="cb">⇄ Сравнение</button><button data-favonly id="fo" aria-pressed="false">★ Избранное</button></span></div>
 </div></header>
@@ -82,12 +82,12 @@ tbody tr{cursor:pointer}tbody tr:hover{background:var(--head)}tbody tr.sel{backg
 const $=s=>document.querySelector(s);
 const G=['Д','Т','БП','Перфорация'],grp=()=>G.filter(g=>!(g=='БП'&&S.m=='1200')),M={'1500':'Станок 1500 мм','1200':'Станок 1200 мм'},CAP=['90','80','60'];
 const rng=(a,b,s)=>{const r=[];for(let x=a;x<=b;x+=s)r.push(x);return r};
-const FILMS={'Д':rng(30,90,5).map(n=>'Д-'+n),'Т':[43,47,...rng(50,90,5),113].map(n=>'Т-'+n),'БП':['Т-100','Д-100'],'Перфорация':[]};
+const FILMS={'Д':rng(30,90,5).map(n=>'Д-'+n),'Т':[43,47,...rng(50,90,5),113].map(n=>'Т-'+n),'БП':['Т-100','Д-100'],'Перфорация':['Д-115']};
 const S={m:'1500',g:'Д',q:'',fav:false,k:'name',d:1,sel:null,favs:[],vals:{},lv:{},edit:false,dirty:0,cmp:false,a:null,b:null,sg:'add',cf:{}};
 try{const o=JSON.parse(localStorage.getItem('plenka')||'{}');if(M[o.m])S.m=o.m;if(Array.isArray(o.favs))S.favs=o.favs;if(o.vals&&typeof o.vals=='object')S.lv=o.vals}catch(e){}
 try{S.vals=JSON.parse(JSON.stringify((window.PLENKA_DATA&&window.PLENKA_DATA.vals)||{}))}catch(e){}
 try{const saved=JSON.parse(localStorage.getItem('plenka3-values')||'{}');if(saved&&typeof saved==='object')S.vals={...S.vals,...saved}}catch(e){}
-function save(){try{localStorage.setItem('plenka',JSON.stringify({m:S.m,favs:S.favs}));localStorage.setItem('plenka3-values',JSON.stringify(S.vals))}catch(e){}}
+function save(){try{localStorage.setItem('plenka',JSON.stringify({m:S.m,favs:S.favs}))}catch(e){}}
 const get=id=>S.vals[S.m+'|'+id]||{};
 const setv=(id,k,x)=>{const key=S.m+'|'+id;(S.vals[key]=S.vals[key]||{})[k]=x;S.dirty=1;save();adm()};
 const val=x=>x===undefined||x===''?'—':x;
@@ -124,7 +124,7 @@ function panel(){
  if(!S.sel){p.innerHTML='<p class="mut" style="margin:0">Выберите плёнку в списке, чтобы увидеть и изменить параметры.</p>';return}
  const id=S.sel,[g,n]=id.split('|'),v=get(id),on=S.favs.includes(id);
  const inp=(k,l)=>S.edit?`<label class="fl"><span>${l}</span><input data-f="${k}" type="number" inputmode="decimal" step="any" value="${v[k]??''}"></label>`:`<div class="fl"><span>${l}</span><div class="ro">${val(v[k])}</div></div>`;
- p.innerHTML=`<div class="row"><h2>${n}</h2><button class="x" data-close>Закрыть</button></div><div class="mut">${M[S.m]} · группа ${g}</div><h3>Вес рулона, кг</h3><div class="g3 wbox">${[0,5,7].map((p,i)=>`<div class="fl"><span>${WC[i]}</span><div class="ro">${kg(wv(id,p))}</div></div>`).join('')}</div><p class="mut" style="margin:6px 0 0;font-size:12px">Считается автоматически: плотность × ширина ${String(S.m/1000).replace('.',',')} м × ${len(id)} м. −5% и −7% округляются вверх до чётного числа граммов, затем переводятся в кг.</p><h3>Температура, °C</h3><div class="g3">${CAP.map((c,i)=>inp('t'+(i+1),c)).join('')}</div><h3>Метраж и скорости</h3><div class="g2">${inp('l2','Метраж')}${inp('l1','Основная скорость')}</div><h3 style="margin-top:8px">Скорость валов</h3><div class="g4">${[1,2,3,4].map(i=>inp('v'+i,'Вал '+i)).join('')}</div><h3>Подача, Гц</h3><div class="g3">${CAP.map((c,i)=>inp('f'+(i+1),c)).join('')}</div><button class="pri" data-copy>Копировать настройки</button><button class="sec" data-cmp="${id}">⇄ Сравнить с другой плёнкой</button><button class="sec" data-fav="${id}">${on?'Убрать из избранного':'В избранное'}</button><p class="mut" style="font-size:13px">${S.edit?'Значения хранятся в странице отдельно для каждого станка и станут видны всем после нажатия «Скачать данные» и замены файла data.js на сайте.':'Значения задаёт администратор.'}</p>`}
+ p.innerHTML=`<div class="row"><h2>${n}</h2><button class="x" data-close>Закрыть</button></div><div class="mut">${M[S.m]} · группа ${g}</div><h3>Вес рулона, кг</h3><div class="g3 wbox">${[0,5,7].map((p,i)=>`<div class="fl"><span>${WC[i]}</span><div class="ro">${kg(wv(id,p))}</div></div>`).join('')}</div><p class="mut" style="margin:6px 0 0;font-size:12px">Считается автоматически: плотность × ширина ${String(S.m/1000).replace('.',',')} м × ${len(id)} м. −5% и −7% округляются вверх до чётного числа граммов, затем переводятся в кг.</p><h3>Температура, °C</h3><div class="g3">${CAP.map((c,i)=>inp('t'+(i+1),c)).join('')}</div><h3>Метраж и скорости</h3><div class="g2">${inp('l2','Метраж')}${inp('l1','Основная скорость')}</div><h3 style="margin-top:8px">Скорость валов</h3><div class="g4">${[1,2,3,4].map(i=>inp('v'+i,'Вал '+i)).join('')}</div><h3>Подача, Гц</h3><div class="g3">${CAP.map((c,i)=>inp('f'+(i+1),c)).join('')}</div><button class="pri" data-copy>Копировать настройки</button><button class="sec" data-cmp="${id}">⇄ Сравнить с другой плёнкой</button><button class="sec" data-fav="${id}">${on?'Убрать из избранного':'В избранное'}</button><p class="mut" style="font-size:13px">${S.edit?'Изменения применятся после нажатия кнопки «Сохранить» и останутся в приложении на этом устройстве.':'Значения задаёт администратор.'}</p>`}
 const fmt=x=>x.toLocaleString('ru-RU',{maximumFractionDigits:1}),nm=id=>id.split('|')[1];
 const opts=v=>grp().map(g=>FILMS[g].length?`<optgroup label='${g}'>${FILMS[g].map(n=>`<option value='${g}|${n}'${g+'|'+n==v?' selected':''}>${n}</option>`).join('')}</optgroup>`:'').join('');
 const baseF=i=>S.cf['f'+i]!==undefined?S.cf['f'+i]:(get(S.a)['f'+i]??'');
@@ -175,15 +175,13 @@ document.addEventListener('keydown',e=>{
  else if(e.key=='/'&&!/INPUT|SELECT/.test(e.target.tagName)){e.preventDefault();$('#q').focus()}});
 function adm(){const a=$('#adm');a.hidden=!S.edit;if(!S.edit)return;$('#adt').textContent=S.dirty?'Есть несохранённые изменения':'Режим администратора';$('#sv').disabled=!S.dirty}
 function savePub(){
- if(!S.dirty)return;
- const payload=JSON.stringify({v:1,vals:S.vals},null,1);
- if(window.PlenkaAndroid&&typeof window.PlenkaAndroid.saveBackup==='function'){
-  window.PlenkaAndroid.saveBackup(payload);
-  S.dirty=0;adm();toast('Изменения сохранены. Выберите место для резервной копии');return;
- }
- const u=URL.createObjectURL(new Blob(['window.PLENKA_DATA='+payload+';\n'],{type:'text/javascript;charset=utf-8'})),l=document.createElement('a');
- l.href=u;l.download='data.js';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),3000);
- S.dirty=0;adm();toast('Резервная копия data.js скачана; изменения сохранены на этом устройстве')}
+ if(!S.dirty){toast('Нет изменений для сохранения');return}
+ try{
+  localStorage.setItem('plenka3-values',JSON.stringify(S.vals));
+  save();
+  S.dirty=0;adm();toast('Изменения сохранены в приложении');
+ }catch(e){toast('Не удалось сохранить данные. Проверьте память устройства')}
+}
 render();
 function admInit(){
  const on=location.hash=='#admin' || location.hash=='#edit';
